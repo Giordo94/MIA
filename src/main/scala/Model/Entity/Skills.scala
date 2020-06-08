@@ -9,9 +9,15 @@ sealed trait Skill {
 }
 
 case class SkillImpl() extends Skill{
+  override var lvl: Int = 0
+
+  override var experience: Int = 0
+
+  override var expNextLvl: Int = 10
+
   override def ++(exp: Int): Unit = {
     experience = exp + experience
-    if(experience >= expNextLvl){
+    while(experience >= expNextLvl){
       experience = experience - expNextLvl
       expNextLvl = (expNextLvl * 1.1).toInt
       lvl = lvl + 1
@@ -23,4 +29,14 @@ case class SkillImpl() extends Skill{
     if(experience < 0)
       experience = 0
   }
+}
+
+case class SkillSet() {
+  val chopping: Skill = SkillImpl()
+
+  val mining: Skill = SkillImpl()
+
+  val digging: Skill = SkillImpl()
+
+  val strength: Skill = SkillImpl()
 }
